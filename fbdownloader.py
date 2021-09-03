@@ -16,10 +16,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from gcheck import count_number
 
-
-HD = 2  ### 1 - only HD, Check 3 pages for HD, if none, script goes to the next URL
-        ### 2 - HD or SD - Check 3 pages for HD, if not, then SD
-
 def numericalSort(value):
     numbers = re.compile(r'(\d+)')
     parts = numbers.split(value)
@@ -64,7 +60,6 @@ def find_date(video_date):
         date_posted_edit = date_posted.replace(":",";")
         return date_posted_edit
     finally:
-       #print('Date: ' + date_posted)
         print('Date: ' + date_posted)
 
 ###================== MAIN =================###
@@ -100,42 +95,24 @@ while url != 0:
     if not url: # break looop if no more lines in file
         break
     countprint = str(count)
-    #print('URL ' + countprint + ': ' + url) # Control print in console (current video in progress)
 
     driver.get(url) # Open video page
-    #time.sleep(2)
     page_source = driver.page_source
-    #output = file_output(page_source)
-    # source_write = open("resources/video_source.txt", "a")
-    # bla = source_write.write(page_source)
-
 
     #date_posted = find_date(url) #FIND DATE FUNCTION
     date_posted = date.today()
     print('Getting download url')
-    if HD == 2:
-    #    try:
-    #         found = re.search('"playable_url":"(.+?)"', page_source).group(1) #search between characters, (.+?) je razdelnik
-    #         video_url = found.replace("\\","")
-    #         video_url = video_url.replace("u0025","%")
-    #    except AttributeError:
-    #         print('Error getting url.')
-    # url_output = open("/home/vladimir/resources/video_url.txt", "a")
-    # url_write = url_output.write(video_url)
 
-        try:
-            found = re.search('"playable_url_quality_hd":"(.+?)"', page_source).group(1) #search between characters, (.+?) je razdelnik
-            video_url = found.replace("\\","")
-            video_url = video_url.replace("u0025","%")
-            video_url = video_url.replace("video.fbeg4-1.fna.fbcdn.net","video-lhr8-2.xx.fbcdn.net")
-            # video_url = video_url + "edb743&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=WzSL0CJdNMMAX8kxwm1&_nc_ht=video-lhr8-2.xx&oh=b9f0978f80d1bbd999dd1177bee72c42&oe=60EB506B&_nc_rid=df99eda67c0d4d2&_nc_vts_prog=1&_nc_vts_internal=1"
-            #except AttributeError:
-            # print('No HD.')
-        except:
-            print('No HD')
-            found = re.search('"playable_url":"(.+?)"', page_source).group(1) #search between characters, (.+?) je razdelnik
-            video_url = found.replace("\\","")
-            video_url = video_url.replace("u0025","%")
+    try:
+        found = re.search('"playable_url_quality_hd":"(.+?)"', page_source).group(1) #search between characters, (.+?) je razdelnik
+        video_url = found.replace("\\","")
+        video_url = video_url.replace("u0025","%")
+        video_url = video_url.replace("video.fbeg4-1.fna.fbcdn.net","video-lhr8-2.xx.fbcdn.net")
+    except:
+        print('No HD')
+        found = re.search('"playable_url":"(.+?)"', page_source).group(1) #search between characters, (.+?) je razdelnik
+        video_url = found.replace("\\","")
+        video_url = video_url.replace("u0025","%")
 
 
     if video_url != False:
