@@ -1,0 +1,2 @@
+ssh -i "AWSUbuntuServer.pem" ubuntu@ec2-3-144-11-78.us-east-2.compute.amazonaws.com
+

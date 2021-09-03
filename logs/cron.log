@@ -1,0 +1,7 @@
+starting script
+https://www.youtube.com/watch?v=Kw7ijizivGY
+885  Miran Rubin   2021 07 24 корисника Serbian Surfer пре 18 минута 27 секунди Нема приказа
+Traceback (most recent call last):
+  File "/home/vladimir/scripts/server_scripts/zivcovek/yt2yt.py", line 16, in <module>
+    url_log = open("logs/uploaded.log", "r")
+FileNotFoundError: [Errno 2] No such file or directory: 'logs/uploaded.log'
